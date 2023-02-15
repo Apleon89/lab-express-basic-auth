@@ -1,24 +1,30 @@
 <div class="container mt-5">
-    <!-- Pills content -->
+    <h2>Register</h2>
     <div class="tab-content">
         <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
             <form action="/auth/signup" method="post">
 
                 <!-- Email input -->
                 <div class="form-outline mb-4">
+                    <label class="form-label mb-1" for="username">Name</label>
                     <input type="text" id="username" name="username" class="form-control" />
-                    <label class="form-label" for="username">Name</label>
                 </div>
 
                 <!-- Password input -->
                 <div class="form-outline mb-4">
+                    <label class="form-label mb-1" for="loginPassword">Password</label>
                     <input type="password" id="loginPassword" name="password" class="form-control" />
-                    <label class="form-label" for="loginPassword">Password</label>
                 </div>
                 
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
             </form>
+
+            {{#if errormsg}}
+            <div class="p-2 bg-danger ">
+                <p class="mb-0 text-white">{{errormsg}}</p>
+            </div>
+            {{/if}}
         </div>
     </div>
 </div>
