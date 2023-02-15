@@ -8,4 +8,7 @@ router.get("/", (req, res, next) => {
 // Auth Routes
 router.use('/auth', require('./auth.routes.js'))
 
+// Logged Users Routes
+router.use('/profile', require('./users.routes.js'))
+
 module.exports = router;
