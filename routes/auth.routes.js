@@ -8,7 +8,6 @@ router.get("/signup", (req, res, next) => {
 });
 
 router.post("/signup", async (req, res, next) => {
-  console.log(req.body);
   const { username, password } = req.body;
 
   //Validation
@@ -58,15 +57,34 @@ router.get("/login", (req, res, next) => {
 });
 
 router.post("/login", async (req, res, next) => {
-  console.log(req.body);
   const { username, password } = req.body;
+
+  if (!username || !password) {
+    res.status(401).render("auth/login.hbs", {
+      errormsg: "Todos los campos deben estar rellenos",
+    });
+    return;
+  }
+
   try {
     const userFound = await User.findOne({ username: username });
+    if(!userFound) {
+      res.status(401).render("auth/login.hbs", {
+        errormsg: "Nombre de usuario incorrecto",
+      });
+      return;
+    }
+
     const isPasswordCorrect = await bcrypt.compare(
       password,
       userFound.password
     );
-    console.log(isPasswordCorrect);
+    if(!isPasswordCorrect) {
+      res.status(401).render("auth/login.hbs", {
+        errormsg: "Contraseña incorrecta",
+      });
+      return;
+    }
 
     //Active Session
     req.session.User = userFound;
